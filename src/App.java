@@ -13,43 +13,43 @@ public class App {
     private static Scanner scanner = new Scanner(System.in);
 
     private static String nombresAlumnos;
+    private static int edades;
 
     public static void main(String[] args) throws Exception {
+        // Creamos el buffer para escribir lo que le vayamos a pasar
         BufferedWriter bw = null;
         try {
             // Le decimos donde va estar la direccion donde vamos a almacenar los datos
             File file = new File("./estudiantes.json");
 
+            // Comprabamos que si no existe el archivo para que lo haga si no existe
             if (!file.exists()) {
                 file.createNewFile();
             }
 
-            // Creamos el buffer para escribir lo que le vayamos a pasar
+            // Creamos el fileWriter para escribir en un archivo. En este caso es un .json
             FileWriter fw = new FileWriter(file);
-            bw = new BufferedWriter(fw);
-            JSONObject jsonObject = new JSONObject();
 
-            JSONArray jsonArray = new JSONArray();
+            bw = new BufferedWriter(fw);
 
             System.out.println("Hola, Que quieres realizar hoy?");
 
             boolean repetir = true;
 
             do {
-                System.out.println("1.Agregar alumno, 2.Buscar alumno, 3.Mostrar alumnos");
-                int opcionRealizar = scanner.nextInt();
+                JSONObject jsonObject = new JSONObject();
 
-                opcionARealizar(opcionRealizar, nombresAlumnos);
+                JSONArray jsonArray = new JSONArray();
+
+                System.out.println("1.Agregar alumno, 2.Buscar alumno, 3.Mostrar alumnos");
+                String opcionRealizar = scanner.next();
+
+                opcionARealizar(opcionRealizar);
                 jsonObject.put("Nombre", nombresAlumnos);
-                jsonObject.put("Edad", 4);
-                jsonObject.put("Menos", 12);
-                jsonObject.put("NOse", 13);
 
                 jsonArray.put(jsonObject);
 
-                System.out.println(nombresAlumnos);
-
-                bw.write(jsonArray.toString(4));
+                bw.write(jsonArray.toString(6));
 
                 repetir = repetirAccion();
             } while (repetir);
@@ -70,16 +70,16 @@ public class App {
         scanner.close();
     }
 
-    private static void opcionARealizar(int opcionRealizar, String nombresAlumnos) {
+    private static void opcionARealizar(String opcionRealizar) {
         switch (opcionRealizar) {
-            case 1:
+            case "1":
                 System.out.println("Opcion 1");
-                nombreAlumno(nombresAlumnos);
+                nombreAlumno();
                 break;
-            case 2:
+            case "2":
                 System.out.println("Opcion 2");
                 break;
-            case 3:
+            case "3":
                 System.out.println("Opcion 3");
                 break;
             default:
@@ -102,7 +102,7 @@ public class App {
     }
 
     // Pregutar su nombre
-    private static void nombreAlumno(String nombreAlumnos) {
+    private static void nombreAlumno() {
         System.out.println("Ingresa tu nombre completo :)");
         nombresAlumnos = scanner.next();
     }
